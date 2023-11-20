@@ -1,7 +1,7 @@
 //importar los paquetes
 const fs = require("fs");
 const path = require("path");
-const filePath = "README.md";
+const filePath = "READMEPRUEBA.md";
 
 const mdLinks = (filePath) => {
   return new Promise((resolve, reject) => {
