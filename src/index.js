@@ -19,7 +19,7 @@ const mdLinks = (filePath) => {
       })
       .catch((error) => {
         reject(error);
-        console.error('Error al obtener los enlaces:', error);
+        console.error('Error al obtener los enlaces:', error); 
       });
   }
   });
