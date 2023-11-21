@@ -1,7 +1,6 @@
 //importar los paquetes
 const { absolutePath, validar, obtenerEnlacesMarkdown } = require("./function");
-const filePath = "READMEPRUEBA.md";
-
+const filePath = '../READMEPRUEBA.md'
 // const esContenidoMarkdown = require('./function')
 
 const mdLinks = (filePath) => {
@@ -29,9 +28,3 @@ const mdLinks = (filePath) => {
 };
 
 module.exports = mdLinks;
-
-mdLinks(filePath)
-  .then((res) => {
-    console.log(res);
-  })
-  .catch((err) => console.log(err));
