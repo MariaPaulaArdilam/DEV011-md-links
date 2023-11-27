@@ -15,6 +15,6 @@
     "markdown-link-extractor": "^3.1.0"
   },
   "scripts": {
-    "test": "jest --coverage"
+    "test": "jest --coverage --verbose"
   }
 }

@@ -1,6 +1,5 @@
 //importar los paquetes
 const { absolutePath, validar, obtenerEnlacesMarkdown, validateLinks } = require("./function");
-// const esContenidoMarkdown = require('./function')
 
 const mdLinks = (path, validate) => {
   return new Promise((resolve, reject) => {
