@@ -7,3 +7,4 @@ mdLinks(filePath, validate)
     console.log(res);
   })
   .catch((err) => console.log(err));
+

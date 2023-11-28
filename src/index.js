@@ -15,19 +15,21 @@ const mdLinks = (path, validate) => {
         if (validate) {
           const linkPromises = links.map(linkObj => {
             return validateLinks(linkObj.href); // Validar cada enlace    
-      })
-      Promise.all(linkPromises)
-      .then(validatedLinks => {
-        // Combinar información de enlaces validados con información original
-        const combinedLinks = links.map((linkObj, index) => {
-          return { ...linkObj, ...validatedLinks[index] };
+            })
+        Promise.all(linkPromises)
+        .then(validatedLinks => {
+          // Combinar información de enlaces validados con información original
+          const combinedLinks = links.map((linkObj, index) => {
+            return { ...linkObj, ...validatedLinks[index] };
+          });
+          // console.log(combinedLinks, 9876);
+          resolve(combinedLinks);
+        })
+        .catch(error => {
+          reject(error);
         });
-        resolve(combinedLinks);
-      })
-      .catch(error => {
-        reject(error);
-      });
   } else {
+    // console.log('LINKS: ', links);
     resolve(links);
   }
 })
