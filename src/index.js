@@ -1,12 +1,10 @@
 //importar los paquetes
-const { absolutePath, validar, obtenerEnlacesMarkdown } = require("./function");
-const filePath = '../READMEPRUEBA.md'
-// const esContenidoMarkdown = require('./function')
+const { absolutePath, validar, obtenerEnlacesMarkdown, validateLinks } = require("./function");
 
-const mdLinks = (filePath) => {
+const mdLinks = (path, validate) => {
   return new Promise((resolve, reject) => {
     // convertir la ruta en absoluta
-    const absoluteFilePath = absolutePath(filePath);
+    const absoluteFilePath = absolutePath(path);
     // comprobar que la ruta existe
     if (!validar(absoluteFilePath)) {
 
@@ -14,17 +12,32 @@ const mdLinks = (filePath) => {
     } else {
       obtenerEnlacesMarkdown(absoluteFilePath)
       .then((links) => {
-        resolve(links);
-        console.log('Enlaces encontrados:');
-      })
-      .catch((error) => {
-        reject(error);
-        console.error('Error al obtener los enlaces:', error); 
-      });
+        if (validate) {
+          const linkPromises = links.map(linkObj => {
+            return validateLinks(linkObj.href); // Validar cada enlace    
+            })
+        Promise.all(linkPromises)
+        .then(validatedLinks => {
+          // Combinar información de enlaces validados con información original
+          const combinedLinks = links.map((linkObj, index) => {
+            return { ...linkObj, ...validatedLinks[index] };
+          });
+          // console.log(combinedLinks, 9876);
+          resolve(combinedLinks);
+        })
+        .catch(error => {
+          reject(error);
+        });
+  } else {
+    // console.log('LINKS: ', links);
+    resolve(links);
+  }
+})
+.catch((error) => {
+  reject(error);
+});
   }
   });
-
-
-};
+}
 
 module.exports = mdLinks;
