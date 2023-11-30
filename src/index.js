@@ -1,7 +1,7 @@
 //importar los paquetes
 const { absolutePath, validar, obtenerEnlacesMarkdown, validateLinks } = require("./function");
 
-const mdLinks = (path, validate) => {
+const mdLinks = (path, validate, stats) => {
   return new Promise((resolve, reject) => {
     // convertir la ruta en absoluta
     const absoluteFilePath = absolutePath(path);
