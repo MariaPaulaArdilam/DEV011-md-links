@@ -1,4 +1,3 @@
-//importar los paquetes
 const { absolutePath, validar, obtenerEnlacesMarkdown, validateLinks } = require("./function");
 
 const mdLinks = (path, validate, stats) => {
@@ -14,13 +13,38 @@ const mdLinks = (path, validate, stats) => {
             const totalLinks = links.length;
             const uniqueLinks = [...new Set(links.map((link) => link.href))].length;
 
-            const statistics = {
-              total: totalLinks,
-              unique: uniqueLinks,
-              // Agrega más estadísticas según sea necesario
-            };
+            if (validate) {
+              const linkPromises = links.map((linkObj) => {
+                return validateLinks(linkObj.href) // Validar cada enlace
+                  .then((validatedLink) => {
+                    return { ...linkObj, ...validatedLink };
+                  })
+                  .catch((error) => {
+                    return { ...linkObj, ok: 'fail' }; // Marcar enlace como fallido
+                  });
+              });
 
-            resolve(statistics);
+              Promise.all(linkPromises)
+                .then((validatedLinks) => {
+                  const combinedLinks = validatedLinks;
+                  const failedLinks = combinedLinks.filter(link => link.ok === 'fail');
+                  const statistics = {
+                    total: totalLinks,
+                    unique: uniqueLinks,
+                    broken: failedLinks.length // Contar enlaces rotos
+                  };
+                  resolve(statistics);
+                })
+                .catch((error) => {
+                  reject(error);
+                });
+            } else {
+              const statistics = {
+                total: totalLinks,
+                unique: uniqueLinks
+              };
+              resolve(statistics);
+            }
           } else if (validate) {
             const linkPromises = links.map((linkObj) => {
               return validateLinks(linkObj.href); // Validar cada enlace
