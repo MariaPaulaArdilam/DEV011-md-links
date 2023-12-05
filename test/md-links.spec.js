@@ -26,7 +26,6 @@ describe("mdLinks", () => {
   });
 });
 
-// jest.mock("../src/index.js");
 
 describe("md-Links es una funcion", () => {
   it("debe validar los links con la opción validate true", (done) => {
@@ -53,12 +52,6 @@ describe("md-Links es una funcion", () => {
         ok: 'ok'
       }
     ];
-    // mdLinks(path, true);
-    // expect(mdLinks).toHaveBeenCalled();
-    // expect(mdLinks).toHaveBeenCalledTimes(link.length);
-    // expect(mdLinks).toHaveBeenCalledWith([
-    //   { href: "https://example.com", text: "Example" },
-    // ]);
 
     expect(mdLinks(path, true)).resolves.toEqual(links);
     done();
