@@ -74,12 +74,6 @@ describe("md-Links es una funcion", () => {
         text: "Node.js",
       },
     ];
-    // mdLinks(path, true);
-    // expect(mdLinks).toHaveBeenCalled();
-    // expect(mdLinks).toHaveBeenCalledTimes(link.length);
-    // expect(mdLinks).toHaveBeenCalledWith([
-    //   { href: "https://example.com", text: "Example" },
-    // ]);
 
     expect(mdLinks(path, false)).resolves.toEqual(links);
     done();
