@@ -1,6 +1,6 @@
 const path = require("path");
 const fs = require("fs");
-const http = require("https");
+const https = require("https");
 
 const absolutePath = (route) => path.resolve(route);
 
@@ -30,7 +30,7 @@ const obtenerEnlacesMarkdown = (filePath) => {
 
 const validateLinks = (link) => {
   return new Promise((resolve, reject) => {
-    const request = http.get(link, response => {
+    const request = https.get(link, (response) => {
       const { statusCode } = response;
       let status = statusCode;
       let ok = statusCode >= 200 && statusCode < 400 ? 'ok' : 'fail';
@@ -40,10 +40,12 @@ const validateLinks = (link) => {
         status: status,
         ok: ok
       });
-      request.on('error', error => {
-        reject(new Error('not supported'));
-      });
+    });
+
+    request.on('error', (error) => {
+      reject(new Error('Error al procesar la solicitud HTTP'));
+    });
   });
-})};
+};
 
 module.exports = { absolutePath, validar, obtenerEnlacesMarkdown, validateLinks };

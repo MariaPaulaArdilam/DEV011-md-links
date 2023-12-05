@@ -1,8 +1,8 @@
 #! /usr/bin/env node
 const mdLinks = require("./src/index.js");
 let filePath = process.argv[2];
-let validate = false;
-let stats = false;
+let validate = true;
+let stats = true ;
 
 const args = process.argv.slice(2);
 
